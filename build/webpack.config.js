@@ -21,7 +21,13 @@ module.exports = {
         alias: { 'vue': 'vue/dist/vue.js' }
     },
     module: {
-        rules: [{
+        rules: [
+            {
+                test: /\.html$/,
+                use: ['html-loader']
+
+            },
+            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: ['babel-loader']
