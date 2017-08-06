@@ -1,5 +1,7 @@
 <template>
-	<div>{{msg}}</div>
+	<div>
+		{{msg}}
+	</div>
 </template>
 <script>
 	export default {
@@ -7,12 +9,15 @@
 			return {
 				msg:"hello"
 			}
+		},
+		mounted(){
+			
 		}
 	}
 </script>
 <style scoped>
 	div{
-		font-size:20rem;
+		font-size:16rem;
 		text-align:center;
 	}
 </style>
