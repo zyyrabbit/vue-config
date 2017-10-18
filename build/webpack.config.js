@@ -5,7 +5,12 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 // 解决path.join解决路劲替换问题
 const pathConvert = (_path,_name) => {
     return path.join(_path,_name).replace('\\','/');
-}
+};
+// const extractSass = new ExtractTextPlugin({
+//     filename: "[name].[contenthash].css",
+//     disable: process.env.NODE_ENV === "development"
+// });
+
 module.exports = {
     entry: {
         app: path.resolve(__dirname, config.SRC_PATH),
@@ -40,11 +45,29 @@ module.exports = {
                 })
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
-                loader: 'file-loader'
+                test:/\.scss$/,
+                use:ExtractTextPlugin.extract({
+                    use: [{
+                        loader: "css-loader"
+                    }, {
+                        loader: "sass-loader"
+                    }],
+                    // use style-loader in development
+                     fallback: "style-loader"
+                })
             },
             {
-                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                test: /\.(eot|svg|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use:[{
+                      loader: 'url-loader',
+                      options:{
+                        limit:2000,
+                        name:'/font/[name].[ext]'
+                      }
+                }]
+            },
+            {
+                test: /\.(png|jpe?g|gif)(\?.*)?$/,
                 use: [{
                     loader: 'url-loader',
                     options: {
@@ -65,6 +88,7 @@ module.exports = {
             template: path.resolve(__dirname, config.HTML_PATH),
             inject: true,
             hash: true
+            // chunks: ['app']
         }),
         new ExtractTextPlugin(pathConvert(config.STYLE_PATH, '[name].css'), {
             allChunks: true
