@@ -1,4 +1,4 @@
 {	
 	"plugins": ["transform-runtime"],
-	"presets":["babel-preset-latest"]
+	"presets":["env","stage-0"]
 }
